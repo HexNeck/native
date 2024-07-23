@@ -1,14 +1,8 @@
-interface Customer {
-    _id: number;
-    firstName: string;
-    lastName: string;
-    avatar: string;
-    contact: string;
-}
+import { Customer } from "../types/types";
 
 interface ConnectivityStatus {
     id: number;
-    connected: boolean;
+    isConnected: boolean;
 }
 
 export const fetchCustomers = async (): Promise<Customer[]> => {

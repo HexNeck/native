@@ -1,46 +1,23 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
-import { CustomerItemProps } from "../types/types";
+import { FlatList, StyleSheet } from "react-native";
+import CustomerItem from "./CustomerItem";
+import { CustomerListProps } from "../types/types";
 
-const CustomerItem: React.FC<CustomerItemProps> = ({ customer }) => {
+const CustomerList: React.FC<CustomerListProps> = ({ customers, colorblindMode }) => {
     return (
-        <View style={styles.itemContainer}>
-            <Image source={{ uri: customer.avatar }} style={styles.avatar} />
-            <View style={styles.infoContainer}>
-                <Text>{customer.firstName} {customer.lastName}</Text>
-                <Text style={styles.details}>Address: {customer.contact}</Text>
-            </View>
-            <View style={[styles.marker, { backgroundColor: customer.connected ? 'green' : 'red' }]} />
-        </View>
+        <FlatList
+            data={customers}
+            keyExtractor={(item) => item._id.toString()}
+            renderItem={({ item }) => <CustomerItem customer={item} colorblindMode={colorblindMode} />}
+            contentContainerStyle={styles.container}
+        />
     );
 };
 
 const styles = StyleSheet.create({
-    itemContainer: {
-        flexDirection: 'row',
+    container: {
         padding: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-        alignItems: 'center'
-    },
-    avatar: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        marginRight: 10,
-    },
-    infoContainer: {
-        flex: 1,
-    },
-    details: {
-        fontSize: 12,
-        color: '#666',
-    },
-    marker: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
     },
 });
 
-export default CustomerItem;
+export default CustomerList;
